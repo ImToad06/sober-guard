@@ -1,8 +1,9 @@
 {
   "name": "backend",
-  "version": "1.0.50",
+  "version": "0.0.1",
   "author": "ImToad06 <jreyesaguilar123@gmail.com>",
   "license": "GPL-3.0-or-later",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/ImToad06/sober-guard.git"
@@ -20,9 +21,13 @@
     "mongoose": "^9.4.1"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "bun-types": "latest",
     "eslint": "10.2.0",
-    "prettier": "3.8.2"
+    "globals": "^17.4.0",
+    "prettier": "3.8.2",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript-eslint": "^8.58.1"
   },
   "module": "src/index.ts"
 }

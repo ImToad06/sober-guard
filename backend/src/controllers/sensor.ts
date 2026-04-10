@@ -1,10 +1,10 @@
-import { Elysia, t } from "elysia";
-import { Reading } from "../models/Reading";
+import { Elysia, t } from 'elysia';
+import { Reading } from '../models/Reading';
 
 export const sensorController = (app: Elysia) =>
   app
     .post(
-      "/api/sensor",
+      '/api/sensor',
       async ({ body, server }) => {
         const { value, deviceId } = body;
         const reading = new Reading({ value, deviceId });
@@ -12,9 +12,9 @@ export const sensorController = (app: Elysia) =>
 
         // Broadcast new reading to all WebSocket clients
         server?.publish(
-          "readings",
+          'readings',
           JSON.stringify({
-            type: "new_reading",
+            type: 'new_reading',
             data: reading,
           }),
         );
@@ -28,13 +28,13 @@ export const sensorController = (app: Elysia) =>
         }),
       },
     )
-    .ws("/ws", {
+    .ws('/ws', {
       open(ws) {
-        ws.subscribe("readings");
-        console.log("Client connected to WebSocket");
+        ws.subscribe('readings');
+        console.log('Client connected to WebSocket');
       },
       close(ws) {
-        ws.unsubscribe("readings");
-        console.log("Client disconnected from WebSocket");
+        ws.unsubscribe('readings');
+        console.log('Client disconnected from WebSocket');
       },
     });

@@ -1,4 +1,4 @@
-import { Schema, model, type Document } from "mongoose";
+import { Schema, model, type Document } from 'mongoose';
 
 export interface IReading extends Document {
   value: number;
@@ -12,4 +12,4 @@ const readingSchema = new Schema<IReading>({
   timestamp: { type: Date, default: Date.now, index: true },
 });
 
-export const Reading = model<IReading>("Reading", readingSchema);
+export const Reading = model<IReading>('Reading', readingSchema);
