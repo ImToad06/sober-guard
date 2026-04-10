@@ -56,12 +56,12 @@
     lastReading: RawReading | null;
   }
 
-  let history: ReadingData[] = [];
-  let stats: Stats = { totalReadings: 0, averageValue: 0, lastReading: null };
-  let liveValue: number | null = null;
+  let history = $state<ReadingData[]>([]);
+  let stats = $state<Stats>({ totalReadings: 0, averageValue: 0, lastReading: null });
+  let liveValue = $state<number | null>(null);
   let ws: WebSocket;
 
-  let chartData: ChartData<'line'> = {
+  let chartData = $state<ChartData<'line'>>({
     labels: [],
     datasets: [
       {
@@ -75,7 +75,7 @@
         borderWidth: 3,
       },
     ],
-  };
+  });
 
   const chartOptions: ChartOptions<'line'> = {
     responsive: true,
@@ -169,7 +169,6 @@
       chartData.labels = labels;
       chartData.datasets[0].data = values;
     }
-    chartData = { ...chartData }; // Trigger Svelte reactivity
   }
 </script>
 

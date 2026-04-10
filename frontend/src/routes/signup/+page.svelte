@@ -3,13 +3,14 @@
   import { UserPlus, Mail, Lock, User } from 'lucide-svelte';
   import { base } from '$app/paths';
 
-  let username = '';
-  let email = '';
-  let password = '';
-  let error = '';
-  let loading = false;
+  let username = $state('');
+  let email = $state('');
+  let password = $state('');
+  let error = $state('');
+  let loading = $state(false);
 
-  async function handleSignup() {
+  async function handleSignup(e: SubmitEvent) {
+    e.preventDefault();
     loading = true;
     error = '';
 
@@ -46,7 +47,7 @@
       </div>
     {/if}
 
-    <form on:submit|preventDefault={handleSignup} class="space-y-5">
+    <form onsubmit={handleSignup} class="space-y-5">
       <div>
         <label
           for="username"

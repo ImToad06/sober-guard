@@ -3,12 +3,13 @@
   import { LogIn, Lock, User } from 'lucide-svelte';
   import { base } from '$app/paths';
 
-  let username = '';
-  let password = '';
-  let error = '';
-  let loading = false;
+  let username = $state('');
+  let password = $state('');
+  let error = $state('');
+  let loading = $state(false);
 
-  async function handleLogin() {
+  async function handleLogin(e: SubmitEvent) {
+    e.preventDefault();
     loading = true;
     error = '';
 
@@ -46,7 +47,7 @@
       </div>
     {/if}
 
-    <form on:submit|preventDefault={handleLogin} class="space-y-6">
+    <form onsubmit={handleLogin} class="space-y-6">
       <div>
         <label for="username" class="mb-2 flex items-center gap-2 text-sm font-bold text-gray-700">
           <User size={16} /> Username

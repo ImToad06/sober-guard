@@ -4,7 +4,8 @@
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
 
-  let isLoggedIn = false;
+  let { children } = $props();
+  let isLoggedIn = $state(false);
 
   onMount(() => {
     isLoggedIn = !!localStorage.getItem('token');
@@ -43,7 +44,7 @@
             <LayoutDashboard size={18} /> <span class="hidden sm:inline">Dashboard</span>
           </a>
           <button
-            on:click={logout}
+            onclick={logout}
             class="rounded-md bg-white/10 px-4 py-1.5 text-sm font-medium tracking-wider uppercase transition-all hover:bg-white/20"
           >
             Logout
@@ -67,7 +68,7 @@
   </header>
 
   <main class="container mx-auto flex-grow px-6 py-8">
-    <slot />
+    {@render children()}
   </main>
 
   <footer class="border-t border-gray-200 bg-white py-6 text-center text-sm text-gray-500">
