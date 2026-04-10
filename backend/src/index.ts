@@ -10,7 +10,13 @@ import { config } from './config';
 connectDB();
 
 const app = new Elysia()
-  .use(cors())
+  .use(
+    cors({
+      origin: true,
+      allowedHeaders: ['Content-Type', 'Authorization'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    })
+  )
   .use(
     jwt({
       name: 'jwt',
