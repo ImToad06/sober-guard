@@ -170,6 +170,21 @@
       chartData.datasets[0].data = values;
     }
   }
+
+  let isSendingCommand = $state(false);
+  async function turnOnLed() {
+    const deviceId = stats.lastReading?.deviceId || 'esp32_unit_01';
+    isSendingCommand = true;
+    try {
+      await client.api.device[deviceId].command.post({ turnOnLed: true });
+    } catch (error) {
+      console.error('Failed to send LED command:', error);
+    } finally {
+      setTimeout(() => {
+        isSendingCommand = false;
+      }, 1000); // Give user feedback that command is sent
+    }
+  }
 </script>
 
 <div class="mx-auto max-w-7xl space-y-8">
