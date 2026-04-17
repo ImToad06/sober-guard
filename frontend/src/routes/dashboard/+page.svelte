@@ -181,6 +181,13 @@
       <p class="font-medium text-gray-500">Live data from MQ135 sensor</p>
     </div>
     <div class="flex items-center gap-3">
+      <button
+        onclick={turnOnLed}
+        disabled={isSendingCommand}
+        class="flex items-center gap-2 rounded-full border border-blue-600 bg-[#1a237e] px-4 py-2 text-sm font-bold text-white hover:bg-blue-800 disabled:opacity-50 transition-colors"
+      >
+        {isSendingCommand ? 'SENDING...' : 'TURN ON LED'}
+      </button>
       <div
         class="flex items-center gap-2 rounded-full border border-green-100 bg-green-50 px-4 py-2 text-sm font-bold text-green-700"
       >

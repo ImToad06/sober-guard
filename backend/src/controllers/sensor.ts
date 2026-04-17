@@ -1,6 +1,9 @@
 import { Elysia, t } from 'elysia';
 import { Reading } from '../models/Reading';
 
+// In-memory store for pending commands per device
+const pendingCommands: Record<string, { turnOnLed?: boolean }> = {};
+
 export const sensorController = (app: Elysia) =>
   app
     .post(
@@ -19,7 +22,15 @@ export const sensorController = (app: Elysia) =>
           }),
         );
 
-        return { success: true };
+        // Check for pending commands
+        const turnOnLed = pendingCommands[deviceId]?.turnOnLed || false;
+        
+        // Reset command after sending
+        if (pendingCommands[deviceId]) {
+          pendingCommands[deviceId].turnOnLed = false;
+        }
+
+        return { success: true, turnOnLed };
       },
       {
         body: t.Object({
@@ -27,6 +38,30 @@ export const sensorController = (app: Elysia) =>
           deviceId: t.String(),
         }),
       },
+    )
+    .post(
+      '/api/device/:deviceId/command',
+      ({ params, body }) => {
+        const { deviceId } = params;
+        
+        if (!pendingCommands[deviceId]) {
+          pendingCommands[deviceId] = {};
+        }
+        
+        if (body.turnOnLed !== undefined) {
+          pendingCommands[deviceId].turnOnLed = body.turnOnLed;
+        }
+
+        return { success: true, pendingCommands: pendingCommands[deviceId] };
+      },
+      {
+        params: t.Object({
+          deviceId: t.String(),
+        }),
+        body: t.Object({
+          turnOnLed: t.Optional(t.Boolean()),
+        }),
+      }
     )
     .ws('/ws', {
       open(ws) {
