@@ -35,6 +35,8 @@ Recupera los datos crudos para análisis temporal.
 
 - **URL:** `/api/dashboard/history`
 - **Método:** `GET`
+- **Parámetros de consulta (Query Params):**
+    - `limit` (Optional, Number): Cantidad de registros a recuperar. Por defecto es 100. Ejemplo: `/api/dashboard/history?limit=1000`
 - **Respuesta (Array de Objetos):**
   ```json
   [

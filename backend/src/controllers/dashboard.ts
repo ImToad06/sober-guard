@@ -1,4 +1,4 @@
-import { Elysia } from 'elysia';
+import { Elysia, t } from 'elysia';
 import { Reading } from '../models/Reading';
 
 export const dashboardController = (app: Elysia) =>
@@ -6,15 +6,19 @@ export const dashboardController = (app: Elysia) =>
     app
       .get(
         '/history',
-        async () => {
-          const history = await Reading.find().sort({ timestamp: -1 }).limit(100);
+        async ({ query }) => {
+          const limit = query.limit ? parseInt(query.limit) : 100;
+          const history = await Reading.find().sort({ timestamp: -1 }).limit(limit);
           return history;
         },
         {
+          query: t.Object({
+            limit: t.Optional(t.String()),
+          }),
           detail: {
             tags: ['Dashboard'],
             summary: 'Historial de lecturas',
-            description: 'Obtiene las últimas 100 lecturas registradas por los sensores.',
+            description: 'Obtiene las últimas lecturas registradas. Use el parámetro limit para ajustar la cantidad de datos (por defecto 100).',
           },
         },
       )
