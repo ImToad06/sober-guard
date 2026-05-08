@@ -8,6 +8,7 @@ Para acceder a los datos de producción, utilice los siguientes puntos de enlace
 
 - **Base URL (API):** `https://sober-guard.onrender.com`
 - **Base URL (WebSocket):** `wss://sober-guard.onrender.com/ws`
+- **Swagger UI (Interactive):** [https://sober-guard.onrender.com/swagger](https://sober-guard.onrender.com/swagger)
 
 ---
 
