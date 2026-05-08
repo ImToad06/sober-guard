@@ -7,6 +7,11 @@
 
 SoberGuard es una solución integral de hardware y software diseñada para el monitoreo de niveles de alcohol en tiempo real, enfocada en entornos donde la seguridad es crítica. El sistema utiliza sensores electroquímicos para detectar la presencia de alcohol en el aire y transmite estos datos de forma inalámbrica a una plataforma centralizada para su análisis y visualización inmediata.
 
+## Documentación
+
+Puedes ver la documentación oficial de sober guard aquí:  
+https://imtoad06.github.io/sober-guard/
+
 ## Características Principales
 
 - **Monitoreo en Tiempo Real:** Visualización instantánea de lecturas mediante WebSockets.
