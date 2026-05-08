@@ -37,6 +37,11 @@ export const sensorController = (app: Elysia) =>
           value: t.Number(),
           deviceId: t.String(),
         }),
+        detail: {
+          tags: ['Sensores'],
+          summary: 'Registrar lectura del sensor',
+          description: 'Recibe datos del sensor MQ135 desde el hardware y los guarda en la base de datos.',
+        },
       },
     )
     .post(
@@ -61,6 +66,11 @@ export const sensorController = (app: Elysia) =>
         body: t.Object({
           turnOnLed: t.Optional(t.Boolean()),
         }),
+        detail: {
+          tags: ['Sensores'],
+          summary: 'Enviar comando al dispositivo',
+          description: 'Encola un comando (ej. encender LED) para ser recogido por el dispositivo hardware.',
+        },
       }
     )
     .ws('/ws', {

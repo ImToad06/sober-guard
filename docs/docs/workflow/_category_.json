@@ -1,0 +1,8 @@
+{
+  "label": "Flujo de Trabajo",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Cómo interactúan todos los componentes del sistema."
+  }
+}

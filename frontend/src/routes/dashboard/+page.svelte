@@ -15,7 +15,7 @@
     type ChartData,
     type ChartOptions,
   } from 'chart.js';
-  import { Activity, Thermometer, Clock, AlertTriangle } from 'lucide-svelte';
+  import { Activity, Thermometer, Clock, AlertTriangle, CheckCircle } from 'lucide-svelte';
   import { PUBLIC_WS_URL } from '$env/static/public';
 
   ChartJS.register(
@@ -143,7 +143,14 @@
         liveValue = reading.value;
         history = [reading, ...history].slice(0, 50);
         updateChart([reading], true);
-        stats.totalReadings++;
+        
+        const newTotal = stats.totalReadings + 1;
+        const newAvg = ((stats.averageValue * stats.totalReadings) + reading.value) / newTotal;
+        stats = {
+          totalReadings: newTotal,
+          averageValue: newAvg,
+          lastReading: reading,
+        };
       }
     };
   });
@@ -162,13 +169,27 @@
     );
     const values = newData.map((r) => r.value);
 
+    let nextLabels;
+    let nextData;
+
     if (append) {
-      chartData.labels = [...(chartData.labels || []).slice(-19), ...labels];
-      chartData.datasets[0].data = [...chartData.datasets[0].data.slice(-19), ...values];
+      nextLabels = [...(chartData.labels || []).slice(-19), ...labels];
+      nextData = [...chartData.datasets[0].data.slice(-19), ...values];
     } else {
-      chartData.labels = labels;
-      chartData.datasets[0].data = values;
+      nextLabels = labels;
+      nextData = values;
     }
+
+    chartData = {
+      ...chartData,
+      labels: nextLabels,
+      datasets: [
+        {
+          ...chartData.datasets[0],
+          data: nextData,
+        },
+      ],
+    };
   }
 
   let isSendingCommand = $state(false);
@@ -255,19 +276,29 @@
       </div>
     </div>
 
-    <div class="card-material border-l-8 border-yellow-500">
+    <div
+      class="card-material border-l-8 {liveValue && liveValue > 400
+        ? 'border-yellow-500'
+        : 'border-green-500'}"
+    >
       <div class="flex items-center gap-4">
-        <div class="rounded-lg bg-yellow-50 p-3 text-yellow-600">
-          <AlertTriangle size={24} />
-        </div>
+        {#if liveValue && liveValue > 400}
+          <div class="rounded-lg bg-yellow-50 p-3 text-yellow-600">
+            <AlertTriangle size={24} />
+          </div>
+        {:else}
+          <div class="rounded-lg bg-green-50 p-3 text-green-600">
+            <CheckCircle size={24} />
+          </div>
+        {/if}
         <div>
           <p class="text-sm font-bold text-gray-500 uppercase">Status</p>
           <p
             class="text-2xl font-black {liveValue && liveValue > 400
-              ? 'text-red-600'
+              ? 'text-yellow-600'
               : 'text-green-600'}"
           >
-            {liveValue && liveValue > 400 ? 'WARNING' : 'SAFE'}
+            {liveValue && liveValue > 400 ? 'UNSAFE' : 'SAFE'}
           </p>
         </div>
       </div>

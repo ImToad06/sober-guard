@@ -34,6 +34,11 @@ export const authController = new Elysia()
             email: t.String(),
             password: t.String(),
           }),
+          detail: {
+            tags: ['Autenticación'],
+            summary: 'Registro de nuevo usuario',
+            description: 'Crea una nueva cuenta de usuario en el sistema.',
+          },
         },
       )
       .post(
@@ -61,6 +66,11 @@ export const authController = new Elysia()
             username: t.String(),
             password: t.String(),
           }),
+          detail: {
+            tags: ['Autenticación'],
+            summary: 'Inicio de sesión',
+            description: 'Autentica a un usuario y devuelve un token JWT.',
+          },
         },
       ),
   );

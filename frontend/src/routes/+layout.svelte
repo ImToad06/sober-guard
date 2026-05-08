@@ -1,5 +1,6 @@
 <script lang="ts">
   import '../app.css';
+  import { page } from '$app/state';
   import { Shield, Home, Info, LogIn, LayoutDashboard } from 'lucide-svelte';
   import { onMount } from 'svelte';
   import { base } from '$app/paths';
@@ -8,6 +9,7 @@
   let isLoggedIn = $state(false);
 
   onMount(() => {
+    console.log('Current Pathname:', page.url.pathname);
     isLoggedIn = !!localStorage.getItem('token');
   });
 
@@ -20,17 +22,17 @@
 <div class="flex min-h-screen flex-col bg-[#f5f5f5]">
   <header class="sticky top-0 z-50 bg-[#1a237e] text-white shadow-lg">
     <nav class="container mx-auto flex items-center justify-between px-6 py-4">
-      <a href="{base}/" class="flex items-center gap-2 text-xl font-bold tracking-tight">
+      <a href="/" class="flex items-center gap-2 text-xl font-bold tracking-tight">
         <Shield size={28} />
         <span>SoberGuard</span>
       </a>
 
       <div class="flex items-center gap-6">
-        <a href="{base}/" class="flex items-center gap-1 transition-colors hover:text-blue-200">
+        <a href="/" class="flex items-center gap-1 transition-colors hover:text-blue-200">
           <Home size={18} /> <span class="hidden sm:inline">Home</span>
         </a>
         <a
-          href="{base}/about"
+          href="/about"
           class="flex items-center gap-1 transition-colors hover:text-blue-200"
         >
           <Info size={18} /> <span class="hidden sm:inline">About</span>
@@ -38,7 +40,7 @@
 
         {#if isLoggedIn}
           <a
-            href="{base}/dashboard"
+            href="/dashboard"
             class="flex items-center gap-1 font-semibold transition-colors hover:text-blue-200"
           >
             <LayoutDashboard size={18} /> <span class="hidden sm:inline">Dashboard</span>
@@ -51,13 +53,13 @@
           </button>
         {:else}
           <a
-            href="{base}/login"
+            href="/login"
             class="flex items-center gap-1 transition-colors hover:text-blue-200"
           >
             <LogIn size={18} /> <span class="hidden sm:inline">Login</span>
           </a>
           <a
-            href="{base}/signup"
+            href="/signup"
             class="rounded-md bg-white px-4 py-1.5 text-sm font-bold tracking-wider text-[#1a237e] uppercase shadow-md transition-all hover:bg-blue-50"
           >
             Sign Up

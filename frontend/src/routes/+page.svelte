@@ -1,7 +1,10 @@
 <script lang="ts">
   import { Shield, Activity, BarChart3, Lock, Info } from 'lucide-svelte';
-  import { base } from '$app/paths';
 </script>
+
+<svelte:head>
+  <title>SoberGuard | Home</title>
+</svelte:head>
 
 <div
   class="mx-auto flex min-h-[70vh] max-w-6xl flex-col items-center justify-center px-4 text-center"
@@ -17,10 +20,10 @@
   </p>
 
   <div class="flex flex-wrap justify-center gap-6">
-    <a href="{base}/signup" class="btn-primary flex items-center gap-2 px-10 py-4 text-lg">
+    <a href="/signup" class="btn-primary flex items-center gap-2 px-10 py-4 text-lg">
       Get Started <Activity size={20} />
     </a>
-    <a href="{base}/about" class="btn-outline flex items-center gap-2 px-10 py-4 text-lg">
+    <a href="/about" class="btn-outline flex items-center gap-2 px-10 py-4 text-lg">
       Learn More <Info size={20} />
     </a>
   </div>
